@@ -25,9 +25,10 @@ options(scipen=999) # probabilities will be in numeric notation, NOT scientific!
 # e.g: p = 0.000043 NOT 4.3e-05
 
 
-# load data
+# load data - I prefer fread() since it is much faster than read.csv()
 mytrain = fread("train.csv", stringsAsFactors = TRUE)
 mytest = fread("test.csv", stringsAsFactors = TRUE)
+
 
 # stripping Dates variable for date time manipulation
 mytrain$dt = as.Date(mytrain$Dates)
@@ -35,7 +36,7 @@ mytrain$year = as.numeric(format(mytrain$dt, "%Y"))
 mytrain$mth = as.numeric(format(mytrain$dt, "%m"))
 mytrain$day = as.numeric(format(mytrain$dt, "%d"))
 
-
+# similar process for mytest dataset
 mytest$dt = as.Date(mytest$Dates)
 mytest$year = as.numeric(format(mytest$dt, "%Y"))
 mytest$mth = as.numeric(format(mytest$dt, "%m"))
@@ -50,6 +51,7 @@ mytest$day = as.numeric(format(mytest$dt, "%d"))
 # --------------------- Section - 2 -------------------- #
 # ------------ some descriptive statistics ------------- #
 # this section is simply to explore the data, and can be completely ignored.
+
 with(mytrain, table(DayOfWeek, Category))
 # note both categories are converted to factors
 
@@ -81,6 +83,7 @@ head(mytest)
 
 # --------------------- Section - 3 -------------------- #
 # ------------------ some pretty graphs ---------------- #
+# -------- this section can also be ignored ------------ #
 
 # chart 1 -- crime category by day of week 
 # image stored as CrimeCategory_by_DayOfWeek.jpg
@@ -139,12 +142,12 @@ mod <- multinom(Category ~ DayOfWeek + year + mth + PdDistrict,
                 data = mytrain, maxit = 500)
 # this takes almost ~2 hours to complete calculation on a Windows 10 laptop 
 # with 4GB accessible to RStudio application.
+# score = 2.60
 
-# simple model :
-# mod <- multinom(Category ~ DayOfWeek PdDistrict, data = mytrain)
+# simple model and loads faster - commented out for now.
 # this formula gives score of 2.65, and takes ~30 minutes to finish computation
 # for 100 iterations.
-
+# mod <- multinom(Category ~ DayOfWeek PdDistrict, data = mytrain)
 
 
 # predict the probabilities "probs" associated with each option 
@@ -170,19 +173,6 @@ colnames(submitdf) = c('Id', 'ARSON','ASSAULT','BAD CHECKS','BRIBERY',
 
 # summary(submitdf[1])  # simply for checking
 
+# create submission file.
 write.csv(submitdf, file = "multinom.csv", row.names = FALSE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
