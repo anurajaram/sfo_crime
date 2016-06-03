@@ -2,9 +2,10 @@
 Analytics using SFO crime data from Kaggle </h1><br><br>
 
 <h2>Graphical analysis & Data Exploration </h2>
-Heatmap and charts given in program "hmap.R". <br>
+Code for heatmap and charts given in program "hmap.R". <br>
 To view images/charts or run the code online use the Kaggle platform link below: <br>
-https://www.kaggle.com/anu2analytics/sf-crime/heatmap-for-crime-categories-and-area <br><br>
+https://www.kaggle.com/anu2analytics/sf-crime/heatmap-for-crime-categories-and-area <br>
+One heatmap image added to this folder as heatmap_SFO.png <br><br>
 
 <h2>Prediction Algorithm: </h2>
 Multinomial regression.
